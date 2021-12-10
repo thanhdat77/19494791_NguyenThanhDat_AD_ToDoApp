@@ -74,6 +74,7 @@ class MainActivity : AppCompatActivity() {
                 if (todos != null) {
                     todolist.add(todos)
                 }
+                todolist.also { input.text  }
             }
             withContext(Dispatchers.Main){
                 Toast.makeText(this@MainActivity, "retrieve", Toast.LENGTH_SHORT).show()
@@ -85,7 +86,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity, e.message, Toast.LENGTH_SHORT).show()
             }
         }
-        
+
     }
 
 
