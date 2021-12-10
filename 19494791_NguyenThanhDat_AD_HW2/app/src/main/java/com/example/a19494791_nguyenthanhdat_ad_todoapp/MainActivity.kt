@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
@@ -15,6 +16,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.lang.Exception
+import java.lang.StringBuilder
 
 class MainActivity : AppCompatActivity() {
     val db = Firebase.firestore.collection("toDo")
@@ -22,20 +24,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var todolist = mutableListOf(
-            toDo("làm bài tập","now",false) ,
-            toDo("nộp bài","tomorow",false)
-
-        )
+        var todolist = mutableListOf<toDo>()
         val addContactDialog = AlertDialog.Builder(this)
             .setTitle("add firebase")
 
             .setPositiveButton("SAVE"){dialogInterface,i->
-                Toast.makeText(this,"success",Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this,"success",Toast.LENGTH_SHORT).show()
             }
 
             .setNegativeButton("CANCEL"){dialogInterface,i->
-                Toast.makeText(this,"no success",Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this,"no success",Toast.LENGTH_SHORT).show()
             }.create()
 
 
@@ -48,7 +46,7 @@ class MainActivity : AppCompatActivity() {
             addContactDialog.show()
             val title = input.text.toString()
             val todo = toDo(title,title,false)
-            todolist.add(todo )
+            todolist.add(todo)
             adapter.notifyItemInserted(todolist.size-1)
             val context = input.text.toString()
             savetoDo(todo)
@@ -58,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         try {
             db.add(todo).await()
             withContext(Dispatchers.Main){
-                Toast.makeText(this@MainActivity, "success", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this@MainActivity, "success", Toast.LENGTH_SHORT).show()
             }
         }catch (e:Exception){
             withContext(Dispatchers.Main){
@@ -66,6 +64,30 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+    private fun retrievetodo()= CoroutineScope(Dispatchers.IO).launch {
+        try {
+            val querySnapshot = db.get().await()
+            val sb = StringBuilder()
+            var todolist = mutableListOf<toDo>()
+            for (document in querySnapshot.documents){
+                val todos = document.toObject<toDo>()
+                if (todos != null) {
+                    todolist.add(todos)
+                }
+            }
+            withContext(Dispatchers.Main){
+                Toast.makeText(this@MainActivity, "retrieve", Toast.LENGTH_SHORT).show()
+            }
+
+
+        }catch (e:Exception){
+            withContext(Dispatchers.Main){
+                Toast.makeText(this@MainActivity, e.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+        
+    }
+
 
 }
 
