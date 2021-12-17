@@ -3,8 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/2021/HK5/PhatTrienUngDung/git_hw2/19494791_NguyenThanhDat_AD_HW2/app/src/main/res/drawable/ic_delete_background.xml" value="0.26614583333333336" />
+        <entry key="..\:/2021/HK5/PhatTrienUngDung/git_hw2/19494791_NguyenThanhDat_AD_HW2/app/src/main/res/drawable/ic_delete_foreground.xml" value="0.26614583333333336" />
+        <entry key="..\:/2021/HK5/PhatTrienUngDung/git_hw2/19494791_NguyenThanhDat_AD_HW2/app/src/main/res/drawable/ic_done_background.xml" value="0.26614583333333336" />
+        <entry key="..\:/2021/HK5/PhatTrienUngDung/git_hw2/19494791_NguyenThanhDat_AD_HW2/app/src/main/res/drawable/ic_edit_background.xml" value="0.26614583333333336" />
         <entry key="..\:/2021/HK5/PhatTrienUngDung/git_hw2/19494791_NguyenThanhDat_AD_HW2/app/src/main/res/layout/activity_main.xml" value="0.22644927536231885" />
-        <entry key="..\:/2021/HK5/PhatTrienUngDung/git_hw2/19494791_NguyenThanhDat_AD_HW2/app/src/main/res/layout/item_todo.xml" value="0.136" />
+        <entry key="..\:/2021/HK5/PhatTrienUngDung/git_hw2/19494791_NguyenThanhDat_AD_HW2/app/src/main/res/layout/item_todo.xml" value="0.264" />
+        <entry key="..\:/2021/HK5/PhatTrienUngDung/git_hw2/19494791_NguyenThanhDat_AD_HW2/app/src/main/res/menu/bar_menu.xml" value="0.25" />
         <entry key="..\:/2021/HK5/PhatTrienUngDung/hw2/app/src/main/res/layout/activity_main.xml" value="0.2359375" />
         <entry key="..\:/2021/HK5/PhatTrienUngDung/hw2/app/src/main/res/layout/item_todo.xml" value="0.245018115942029" />
       </map>

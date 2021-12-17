@@ -17,41 +17,51 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.lang.Exception
 import java.lang.StringBuilder
+import android.content.DialogInterface
+
+import android.text.Editable
+import android.view.Menu
+import android.view.MenuItem
+
+import android.widget.EditText
+
+
+
 
 class MainActivity : AppCompatActivity() {
     val db = Firebase.firestore.collection("toDo")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        retrievetodo()
         var todolist = mutableListOf<toDo>()
-        val addContactDialog = AlertDialog.Builder(this)
-            .setTitle("add firebase")
-
-            .setPositiveButton("SAVE"){dialogInterface,i->
-//                Toast.makeText(this,"success",Toast.LENGTH_SHORT).show()
-            }
-
-            .setNegativeButton("CANCEL"){dialogInterface,i->
-//                Toast.makeText(this,"no success",Toast.LENGTH_SHORT).show()
-            }.create()
-
-
         val adapter = toAdapter(todolist)
         ryview.adapter = adapter
         ryview.layoutManager = LinearLayoutManager(this)
 
 
         bntUploadData.setOnClickListener(){
-            addContactDialog.show()
-            val title = input.text.toString()
-            val todo = toDo(title,title,false)
-            todolist.add(todo)
-            adapter.notifyItemInserted(todolist.size-1)
-            val context = input.text.toString()
-            savetoDo(todo)
+            var alert = AlertDialog.Builder(this)
+            val edittext = EditText(this)
+            alert.setTitle("Ask new task")
+            alert.setView(edittext)
+            alert.setPositiveButton("Save",
+                DialogInterface.OnClickListener { dialog, whichButton ->
+                    val todo = toDo(edittext.text.toString(),edittext.text.toString(),false)
+                    todolist.add(todo)
+                    savetoDo(todo)
+                    retrievetodo()
+                    adapter.notifyItemInserted(todolist.size-1)
+                })
+            alert.setNegativeButton("Cancel", { dialog, whichButton ->})
+            alert.show()
         }
+
+
     }
+
+
+
     private fun savetoDo(todo: toDo)= CoroutineScope(Dispatchers.IO).launch {
         try {
             db.add(todo).await()
@@ -74,7 +84,7 @@ class MainActivity : AppCompatActivity() {
                 if (todos != null) {
                     todolist.add(todos)
                 }
-                todolist.also { input.text  }
+
             }
             withContext(Dispatchers.Main){
                 Toast.makeText(this@MainActivity, "retrieve", Toast.LENGTH_SHORT).show()
@@ -89,6 +99,19 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.bar_menu,menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.ic_edit -> Toast.makeText(this, "edit",Toast.LENGTH_SHORT).show()
+            R.id.ic_done -> Toast.makeText(this, "done",Toast.LENGTH_SHORT).show()
+            R.id.ic_delete -> Toast.makeText(this, "delete",Toast.LENGTH_SHORT).show()
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
 }
 

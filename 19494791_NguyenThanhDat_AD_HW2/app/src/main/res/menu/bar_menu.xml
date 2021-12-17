@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/ic_edit"
+        android:title="Edit"
+        android:icon="@mipmap/ic_edit"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/ic_delete"
+        android:title="Detele"
+        android:icon="@mipmap/ic_delete"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/ic_done"
+        android:title=""
+        android:icon="@mipmap/ic_done"
+        app:showAsAction="always"/>
+</menu>
